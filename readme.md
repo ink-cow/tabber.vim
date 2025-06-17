@@ -12,6 +12,7 @@ Invoke a simple popup with the command `:Tabber`
 
 Here's a remarkable life-like facsimile!
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             ╔ [ T A B B E R ]═════════════════════════╗
             ║                                         ║
             ║   1 [No Name]                           ║
@@ -20,14 +21,34 @@ Here's a remarkable life-like facsimile!
             ║   4 storytime | snow-white-vampire.md   ║
             ║   5 research | medieval-dresses.md      ║
             ║   6 plugin | popup.txt | tabber.vim     ║
+            ║       Close tabs >>                     ║
             ║                                         ║
             ╚═════════════════════════════════════════╝
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Go up and down with j/k then select your destination
 - YOU ARE HERE: Your current tab is selected by default
 - Each line lists all the open windows in each tab
 - The popup can be dragged and resized with the mouse
 - Use x or escape to close the window without leaving the current tab
+- "Close tabs" mode lets you close one or many tabs without moving
+
+Below, artist's rendering of the "close tabs" mode. This popup will remain open until you dismiss it with x or `<esc>`, or click to return to "tab selection" mode.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            ╔ [ CLOSE TABS ]══════════════════════════╗
+            ║                                         ║
+            ║   1 [No Name]                           ║
+            ║   2 commonmark.vim                      ║
+            ║   3 storytime | snow-white-story.md     ║
+            ║              *** POOF! ***              ║
+            ║   4 research | medieval-dresses.md      ║
+            ║   5 plugin | popup.txt | tabber.vim     ║
+            ║       << Tab selection                  ║
+            ║                                         ║
+            ╚═════════════════════════════════════════╝
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 ## Mapping for writers
 

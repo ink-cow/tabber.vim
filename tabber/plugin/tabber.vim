@@ -19,15 +19,17 @@ if !exists('g:tabberPadding')
     let g:tabberPadding = 3
 endif
 " -----------------------------------------------------------------------
-command! Tabber call Tabber()
+command! Tabber call Tabber('tabber')
 if exists('g:tabberMapping')
-    exe 'nnoremap '. g:tabberMapping .' :call Tabber()<cr>'
+    exe "nnoremap ". g:tabberMapping ." :call Tabber('tabber')<cr>"
 endif
+inoremap <expr> <C-n> pumvisible() ? "\<Del>" : ":call Tabber('clobber')"
 " -----------------------------------------------------------------------
-function! Tabber()
+function! Tabber(mode)
     redir @t
     silent tabs
     redir END
+    let s:delnum = (tabpagenr('$') + 1)
     let s:tags = trim(@t)
     let s:tags = substitute(s:tags,"[^ ]\\+/","","g")
     let s:tags = substitute(s:tags,"Tab page \\(\\d*\\)","\\1","g")
@@ -36,20 +38,49 @@ function! Tabber()
     let s:tags = substitute(s:tags,"\\n   ","","g")
     let s:tags = substitute(s:tags,"[^ ]*VOOM\\d*","VOOM |","g")
     let s:tablist = split(s:tags,"\\n")
-    function! TabberGo(id, result)
-        let s:tabnogo = tabpagenr()
-        let s:tabgo = a:result
-        if s:tabgo == "-1"
-            let s:tabgo = s:tabnogo
-        endif
+    if a:mode == "tabber"
+        call add(s:tablist,'    Close tabs >>')
+        let tabber = popup_menu(s:tablist, 
+                    \ #{ title: " [ T A B B E R ] ", callback: 'TabberGo',
+                    \ line: g:tabberMargin, col: (g:tabberMargin*3), wrap:'false',
+                    \ border: [], dragall: 1, resize:1, pos: g:tabberPosition, 
+                    \ padding: [(g:tabberPadding/3),g:tabberPadding,(g:tabberPadding/2),g:tabberPadding]} )
+        call win_execute(tabber, 'hi! PmenuSel gui=bold cterm=bold')
+        call win_execute(tabber, 'call cursor('.tabpagenr().', 1)')
+    elseif a:mode == "clobber"
+        call add(s:tablist,'    << Tab selection')
+        let clobber = popup_menu(s:tablist, 
+                    \ #{ title: " [ CLOSE TABS ] ", callback: 'TabberClose',
+                    \ line: g:tabberMargin, col: (g:tabberMargin*3), wrap:'false',
+                    \ border: [], dragall: 1, resize:1, pos: g:tabberPosition,
+                    \ padding: [(g:tabberPadding/3),g:tabberPadding,(g:tabberPadding/2),g:tabberPadding]} )
+        call win_execute(clobber, 'hi! PmenuSel gui=bold cterm=bold')
+        call win_execute(clobber, 'call cursor('.tabpagenr().', 1)')
+    endif
+endfunction
+function! TabberGo(id, result)
+    let s:tabstay = tabpagenr()
+    let s:tabgo = a:result
+    echo a:result
+    if s:tabgo == "-1"
+        let s:tabgo = s:tabstay
+    elseif s:tabgo == s:delnum
+        call Tabber('clobber')
+    else
         exe 'normal '. s:tabgo .'gt'
-    endfunction
-    let tabber = popup_menu(s:tablist, 
-                \ #{ title: " [ T A B B E R ] ", callback: 'TabberGo',
-                \ line: g:tabberMargin, col: (g:tabberMargin*3), wrap:'false',
-                \ border: [], dragall: 1, resize:1, pos: g:tabberPosition, 
-                \ padding: [(g:tabberPadding/3),g:tabberPadding,(g:tabberPadding/2),g:tabberPadding]} )
-    call win_execute(tabber, 'hi! PmenuSel gui=bold cterm=bold')
-    call win_execute(tabber, 'call cursor('.tabpagenr().', 1)')
+    endif
+endfunction
+function! TabberClose(id, result)
+    let s:tabstay = tabpagenr()
+    let s:tabgo = a:result
+    echo a:result
+    if s:tabgo == "-1"
+        let s:tabgo = s:tabstay
+    elseif s:tabgo == s:delnum
+        call Tabber('tabber')
+    else
+        exe ':'.s:tabgo .'tabclose'
+        call Tabber('clobber')
+    endif
 endfunction
 " -----------------------------------------------------------------------

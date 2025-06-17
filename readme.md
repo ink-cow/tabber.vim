@@ -86,7 +86,7 @@ Margin and padding should be self explanatory. The bigger the number, the bigger
 
 To map your shortcut, you can indicate your preferred shortcut with g:tabberMapping or define it directly:
 
-    nnoremap <Leader>, :call Tabber()<cr>
+    nnoremap <Leader>, :call Tabber('tabber')<cr>
 
 This may sound silly, but I suggest mapping `<Leader><Leader>` so you can just double-tap to access your workspace super-quick. The following seems to actually work.
 

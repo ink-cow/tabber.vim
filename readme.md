@@ -2,6 +2,10 @@
 
 Summon a workspace overview to quickly navigate tabs!
 
+## Installation
+
+Just one small plugin file.
+
 ## Usage
 
 Invoke a simple popup with the command `:Tabber`

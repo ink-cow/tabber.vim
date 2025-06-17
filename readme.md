@@ -89,9 +89,3 @@ Well, I can only guess what might go wrong.
 The tab list is created by editing the internal tab list with regex, and every tab must reside on one line only. If the lines are broken for any reason, the selection will be thrown off.
 
 Access Vim's tab list by typing `:tabs`.
-
-## Changelog
-
-- 2025/06/16: Included line to format VOOM window
-- 2025/06/15: Fixed minor format issue
-- 2025/06/14: Released

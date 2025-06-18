@@ -3,8 +3,8 @@
 " MAINTAINER:       Ink Cow
 " WEBSITE:          https://www.github.com/ink-cow
 " INITIAL RELEASE:  14 June 2025
-" VERSION:          1.3
-" UPDATED:          16 June 2025
+" VERSION:          1.51
+" UPDATED:          17 June 2025
 " -----------------------------------------------------------------------
 " TABBER
 " Summon a workspace overview to quickly navigate tabs!
@@ -61,7 +61,6 @@ endfunction
 function! TabberGo(id, result)
     let s:tabstay = tabpagenr()
     let s:tabgo = a:result
-    echo a:result
     if s:tabgo == "-1"
         let s:tabgo = s:tabstay
     elseif s:tabgo == s:delnum
@@ -73,7 +72,6 @@ endfunction
 function! TabberClose(id, result)
     let s:tabstay = tabpagenr()
     let s:tabgo = a:result
-    echo a:result
     if s:tabgo == "-1"
         let s:tabgo = s:tabstay
     elseif s:tabgo == s:delnum

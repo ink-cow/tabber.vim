@@ -3,8 +3,8 @@
 " MAINTAINER:       Ink Cow
 " WEBSITE:          https://www.github.com/ink-cow
 " INITIAL RELEASE:  14 June 2025
-" VERSION:          1.51
-" UPDATED:          17 June 2025
+" VERSION:          1.55
+" UPDATED:          18 June 2025
 " -----------------------------------------------------------------------
 " TABBER
 " Summon a workspace overview to quickly navigate tabs!
@@ -76,9 +76,13 @@ function! TabberClose(id, result)
         let s:tabgo = s:tabstay
     elseif s:tabgo == s:delnum
         call Tabber('tabber')
-    else
+    elseif tabpagenr('$') != "1"
         exe ':'.s:tabgo .'tabclose'
         call Tabber('clobber')
+    else
+        echohl WarningMsg
+        echo "Last tab standing."
+        echohl None
     endif
 endfunction
 " -----------------------------------------------------------------------
